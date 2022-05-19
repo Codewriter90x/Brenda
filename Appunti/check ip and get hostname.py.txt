@@ -1,0 +1,17 @@
+import netifaces
+import os
+import socket
+
+localIp = netifaces.ifaddresses('eth4')[netifaces.AF_INET][0]['addr']
+ipArray = localIp.split('.')
+
+for x in range(1, 254):
+   ipToPing = str(ipArray[0]) + '.' + str(ipArray[1]) + '.' + str(ipArray[2]) + '.' + str(x)
+   response = os.system("ping -c 1 " + ipToPing)
+
+   if response == 0:
+      print ipToPing, 'is up'
+      try:
+         print socket.gethostbyaddr(ipToPing)
+      except:
+         print 'no hostname'

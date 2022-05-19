@@ -1,0 +1,17 @@
+import netifaces
+
+interfaces = netifaces.interfaces()
+for i in interfaces:
+    if i == 'lo':
+        continue
+    iface = netifaces.ifaddresses(i).get(netifaces.AF_INET)
+    if iface != None:
+        for j in iface:
+            print j['addr']
+
+
+oppure
+
+import netifaces
+
+print netifaces.ifaddresses('eth0')[netifaces.AF_INET][0]['addr']

@@ -1,0 +1,17 @@
+import subprocess
+import sys
+remotehost="192.168.0.122"
+cmd="arp -a"
+p=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+output, errors = p.communicate()
+if output is not None :
+    if sys.platform in ['linux','linux2']:
+        for i in output.split("\n"):
+            if remotehost in i:
+                for j in i.split():
+                    if ":" in j:
+                        print "%s--> %s" % (remotehost,j)
+    elif sys.platform in ['win32']:
+        item =  output.split("\n")[-2]
+        if remotehost in item:
+            print "%s-->  %s" %(remotehost, item.split()[1])
